@@ -47,7 +47,7 @@ router.post('/crear-cuenta',[
     check('email','El email no es valido').isEmail().escape(),
     check('password','La contraseña  es obligatoria').not().isEmpty().escape(),
     check('confirmar','Confirma tu contraseña').not().isEmpty().escape(),
-    matchPassword,
+    check('confirmar').custom((confirmar,{req},)=>(matchPassword(confirmar,req))),
     validarCampos,
     renderUsuario
 ],crearUsuario);

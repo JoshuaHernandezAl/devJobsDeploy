@@ -3,14 +3,16 @@ const { validationResult } = require('express-validator');
 const multer = require('multer');
 const shortid = require('shortid');
 
-const matchPassword=(req,res=response,next)=>{
-    const {confirmar,password}=req.body;
-    if(confirmar!==password){
-        return res.status(401).json({
-            msg:'Las contraseñas no coinciden',
-        });
+const matchPassword=(confirmarPassword,req)=>{
+    if(confirmarPassword){
+        if(confirmarPassword !== req.body.password){
+            throw new Error('Las contraseñas no coinciden');
+        }else{
+            return true;
+        }
+    }else{
+        throw new Error('Ingresa contraseña');
     }
-    next();
 }
 const subirImagen=(req,res,next)=>{
     
